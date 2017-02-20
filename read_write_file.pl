@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+#Important for using various shell command
+use Cwd;
+
 # print("What do you want do with test.txt file ?\n");
 # print("Selct:\n");
 # print("r ---> for read\n");
@@ -24,15 +27,55 @@
 		# print("Bye Bye !!!\nThe only values allowed are:\n r for reading\n w for writing\n");
 	# }
 	
+#Function that execute the equivalent ls command in linux
+#on the path passed as parameter with this type of format: C:\\folder\\folder
+#and list only the files(if there are) present in that path folder
+sub readDir{
+	#$dirname = 'C:\Users\carlo';
+	@pathDir = @_;
+	print("\n");
+	print("\n********* Sub readDir *********************\n");
+	#print("Inside pathDir array: @pathDir[0]\n");
+	#print("Inside the sub with the param: @pathDir[0]\n");
+	opendir(DIR, $pathDir[0]) or die "Could not open $pathDir\n";
+	while ($filename = readdir(DIR)) {
+		print "$filename\n" if -f $filename;
+	}
+	closedir(DIR);
+	print("********* end Sub readDir *****************");
+	print("\n")
+}
+
+print("I'm in this path folder now: \n");
+print(getcwd, "\n");
+print("Give me the directory that you want inspect: \n");
+chomp($x = <STDIN>);
+chdir($x);
+print("\nCheck where i'm now:\n");
+print getcwd;
+@dir_path = $x;
+readDir(@dir_path);
+
+
+
+#Function that allow to open and read the content of a specified file
+#present in the current directory
 sub readFile{
-	$path = @_;
-	open($fr, "<", $name_path);
+	@path = @_;
+	print("\n");
+	print("********* Sub readFile *********************\n");
+	# print("Inside sub\n");
+	# print("Value of path: @path\n");
+	print("Value of path0: @path[0]\n");
+	# print("Value of path: $path\n");
+	open($fr, "<", @path[0]);
 	while($row = <$fr>)
 	{
 		chomp($row);
 		print($row, "\n");
 	}
 	close($fr);
+	print("********* end Sub readFile *****************\n");
 }
 	
 print("What is the file to open ?\n");
@@ -40,39 +83,13 @@ print("What is the file to open ?\n");
 #value of $/ (also known as $INPUT_RECORD_SEPARATOR in the English module). 
 #It returns the total number of characters removed from all its arguments
 chomp($name_path = <STDIN>);
-readFile($name_path);
-
+@name_path = $name_path;
+#print("Value name_path before calling the method: @name_path\n");
+readFile(@name_path);
 print("\n");
 
 
-
-sub readDir{
-	#$dirname = '.';
-	$pathDir = @_;
-	print("Inside the sub with the param: $pathDir\n");
-	opendir(DIR, $pathDir) or die "Could not open $pathDir\n";
-	while ($filename = readdir(DIR)) {
-		print "$filename\n" if -f $filename;
-	}
-	closedir(DIR);
-}
-
-print("Give me the path of the directory that you want inspect:\n");
-chomp($nameDir = <STDIN>);
-print("Value of nameDir: $nameDir");
-readDir($nameDir);
-
-#This is the file we want use
-#$read = 'test.txt';
-#Open() function, $fh is the variable containing all the content
-#of the file because using the operator < we are reading from
-# open($fr, "<", $read);
-# while($row = <$fr>)
-# {
-	# chomp($row);
-	# print($row, "\n");
-# }
-# 
+#Function that allow to write in the file passed as param
 # $write = 'test.txt';
 # open($fw, ">>", $write);
 # @array_of_name = ("Jackson", "Jimmy", "Willy");
