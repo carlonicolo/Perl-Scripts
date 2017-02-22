@@ -103,24 +103,25 @@ sub writeFile{
 	print("The value of write: $write\n");
 	
 	# Use the open() function to create the file.
-	unless(open FILE, '>'.$write) {
+	#unless(open FILE, '>'.$write) {
 	# Die with error message 
 	# if we can't open it.
-	die "\nUnable to create $file\n";
-	
-	print(getcwd, "Before foreach\n");
-	foreach $name (@array_of_name){
-		print($fw "$name\n");
-		}
-	}
-	
-	
-	#open($fw, ">>", $write);
-	#@array_of_name = ("Jackson", "Jimmy", "Willy");
-	#print(getcwd, "Before foreach\n");
-	# foreach $name (@array_of_name){
-		# print($fw "$name\n");
+	#die "\nUnable to create $file\n";
+	# 
+	# print(getcwd, "Before foreach\n");
+	# foreach $name (@array_value){
+		# print("Sono nel foreach !!!");
+		# print(FILE "$name\n");
 		# }
+	#close FILE;
+	#}
+	
+	
+	open(my $fh, '>', $write);
+	foreach $name_in (@array_value){
+		print($name);
+		print($fh "$name_in\n");
+		}
 	}
 	
 print("Give me what you want add separated by comma:\n");
