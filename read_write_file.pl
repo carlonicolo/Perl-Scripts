@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+
+
 #Important for using various shell command
 use Cwd;
 
@@ -88,12 +90,62 @@ chomp($name_path = <STDIN>);
 readFile(@name_path);
 print("\n");
 
-
 #Function that allow to write in the file passed as param
-# $write = 'test.txt';
-# open($fw, ">>", $write);
-# @array_of_name = ("Jackson", "Jimmy", "Willy");
+sub writeFile{
+	@array_value = @_;
+	print(@array_value);
+	#print("\nValue of the array inside the sub writeFile\n @array_value\n");
+	
+	my $username = getlogin;
+	
+	$write = "C:\\Users\\$username\\test.txt";
+	
+	print("The value of write: $write\n");
+	
+	# Use the open() function to create the file.
+	unless(open FILE, '>'.$write) {
+	# Die with error message 
+	# if we can't open it.
+	die "\nUnable to create $file\n";
+	
+	print(getcwd, "Before foreach\n");
+	foreach $name (@array_of_name){
+		print($fw "$name\n");
+		}
+	}
+	
+	
+	#open($fw, ">>", $write);
+	#@array_of_name = ("Jackson", "Jimmy", "Willy");
+	#print(getcwd, "Before foreach\n");
+	# foreach $name (@array_of_name){
+		# print($fw "$name\n");
+		# }
+	}
+	
+print("Give me what you want add separated by comma:\n");
+print("E.g. Jackson,Jimmy,WIlly,Jack\n");
+chomp($in = <STDIN>);
+  # my @values = split(',', $in);
 # 
-# foreach $name (@array_of_name){
-	# print($fw "$name\n");
-	# }
+  # foreach my $val (@values) {
+    # print "$val\n";
+  # }
+  
+writeFile(@values); 
+ 
+ 
+
+
+# Display all the C source files in /tmp directory.
+$dir = "/tmp/*.c";
+@files = glob( $dir );
+
+foreach (@files ){
+   print $_ . "\n";
+}
+
+
+
+
+
